@@ -32,4 +32,4 @@ O projeto é composto pelas seguintes etapas:
 
 ### 1. Clone o repositório
 ```bash
-git clone https://github.com/seu-usuario/DataFlowPipeline-v1.git
+git clone https://github.com/dricoosz/DataFlowPipeline-v1.git
