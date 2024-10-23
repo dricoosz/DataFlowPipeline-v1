@@ -2,19 +2,15 @@ import psycopg2
 from psycopg2 import sql
 from contrato import Vendas
 import streamlit as st
-from dotenv import load_dotenv
 import os
-
-if os.path.exists('.env'):
-    load_dotenv()
-
-DB_HOST=os.getenv("DB_HOST")
-DB_NAME=os.getenv("DB_NAME")
-DB_USER=os.getenv("DB_USER")
-DB_PASS=os.getenv("DB_PASS")
 
 def salvar_no_postgres(dados: Vendas):
     try:
+        DB_HOST=os.getenv("DB_HOST")
+        DB_NAME=os.getenv("DB_NAME")
+        DB_USER=os.getenv("DB_USER")
+        DB_PASS=os.getenv("DB_PASS")
+
         st.write(os.getenv("DB_HOST"))
         st.write(os.getenv("DB_NAME"))
         st.write(os.getenv("DB_USER"))
