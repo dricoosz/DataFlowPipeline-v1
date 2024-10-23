@@ -1,6 +1,8 @@
 import streamlit as st
 from datetime import datetime, time
-import contrato
+from contrato import Vendas
+from pydantic import ValidationError
+from database import salvar_no_postgres
 
 def main():
     
@@ -12,15 +14,29 @@ def main():
     quantidade = st.number_input("Campo numérico para inserir a quantidade de produtos vendidos.", min_value=1, step=1)
     produto = st.selectbox("Campo de seleção para escolher o produto vendido.", options=["Gemini", "ChatGTP", "Llamma"])
     
-    if st.button("Salvar"):
-        data_hora = datetime.combine(data, hora)
-        st.write("**Dados da Venda:**")
-        st.write(f"Email do Vendedor: {email}")
-        st.write(f"Dados da Venda:{data_hora}")
-        st.write(f"Dados da Venda:{valor:.2f}")
-        st.write(f"Dados da Venda:{quantidade}")
-        st.write(f"Dados da Venda:{produto}")
-        
+    try:
+        if st.button("Salvar"):
+            data_hora = datetime.combine(data, hora)
+            
+            venda = Vendas(
+                email = email,
+                data = data,
+                valor = valor,
+                quantidade = quantidade,
+                produto = produto,
+            )
+            
+            st.write("**Dados da Venda:**")
+            st.write(f"Email do Vendedor: {email}")
+            st.write(f"Dados da Venda:{data_hora}")
+            st.write(f"Dados da Venda:{valor:.2f}")
+            st.write(f"Dados da Venda:{quantidade}")
+            st.write(f"Dados da Venda:{produto}")
+            
+            st.write(venda)
+            salvar_no_postgres(venda)
+    except Exception as e:
+        st.error(f"{e}")
     
-if __name__ == "__main__":
+if __name__=="__main__":
     main()
