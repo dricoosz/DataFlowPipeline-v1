@@ -5,7 +5,8 @@ import streamlit as st
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+if os.path.exists('.env'):
+    load_dotenv()
 
 DB_HOST=os.getenv("DB_HOST")
 DB_NAME=os.getenv("DB_NAME")
